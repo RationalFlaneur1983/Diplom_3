@@ -2,6 +2,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from helpers.locators import Locators
+from helpers.urls import Urls
+
 import allure
 
 
@@ -76,8 +79,10 @@ class BasePage:
         return self.driver.find_element(*locator)
 
     @allure.step("Заполнить форму входа: email={email}, password={password}")
-    def fill_login_form(self, email_locator, email, password_locator, password, submit_button_locator):
-        self.enter_text(email_locator, email)
-        self.enter_text(password_locator, password)
-        self.click_element(submit_button_locator)
+    def authorize(self, email, password):
+        self.click_element(Locators.PERSONAL_ACCOUNT_BUTTON)
+        self.wait_until_url_matches(Urls.PERSONAL_ACCOUNT_URL)
+        self.enter_text(Locators.EMAIL_INPUT, email)
+        self.enter_text(Locators.PASSWORD_INPUT, password)
+        self.click_element(Locators.SIGN_IN_BUTTON)
 

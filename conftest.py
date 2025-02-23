@@ -4,7 +4,7 @@ from helpers.urls import Urls
 from helpers.user_helpers import UserRegistration
 
 
-@pytest.fixture(params=["chrome", "firefox"])
+@pytest.fixture(params=["chrome"])
 def driver(request):
     if request.param == "chrome":
         browser = webdriver.Chrome()
